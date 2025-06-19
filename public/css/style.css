@@ -1,0 +1,46 @@
+/* Général */
+html, body {
+    min-height: 100vh;
+    background-color: #FFFDF7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    color: #333;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/* LOGO */
+.logo {
+    background: #497555;
+    color: white;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'Playfair Display', serif;
+}
+
+
+/* Menu de navigation */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 32px 100px;
+}
+
+.nav ul {
+    display: flex;
+    gap: 53px;
+}
