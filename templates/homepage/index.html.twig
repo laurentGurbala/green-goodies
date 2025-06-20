@@ -1,7 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}{{ parent() }} Accueil{% endblock %}
 
 {% block body %}
-    coucou
+<main>
+    <section class="welcome-banner">
+        <div class="welcome-banner__text">
+            <h1 class="welcome-banner__title">Bienvenue</h1>
+            <div class="welcome-banner__content">
+                <p>Découvrez notre univers de produits durables et éthiques pour une consommation responsable</p>
+                <p>Retrouvez des articles d'hygiène & beauté, des accessoires & boissons et du prêt <br>à porter</p>
+            </div>
+        </div>
+        <div class="welcome-banner__picture">
+            <img src="{{ asset('uploads/website/welcome-picture.jpg')}}" alt="Des écritaux montrant l'engagement de Green Goodies envers l'environnement">
+        </div>
+    </section>
+</main>
 {% endblock %}
