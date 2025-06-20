@@ -4,6 +4,7 @@
 
 {% block body %}
 <main>
+    <!-- Welcome Banner -->
     <section class="welcome-banner">
         <div class="welcome-banner__text">
             <h1 class="welcome-banner__title">Bienvenue</h1>
@@ -13,7 +14,29 @@
             </div>
         </div>
         <div class="welcome-banner__picture">
-            <img src="{{ asset('uploads/website/welcome-picture.jpg')}}" alt="Des écritaux montrant l'engagement de Green Goodies envers l'environnement">
+            <img src="{{ asset('uploads/website/welcome-picture.jpg')}}"
+                alt="Des écritaux montrant l'engagement de Green Goodies envers l'environnement">
+        </div>
+    </section>
+
+    <!-- Nos Produits -->
+    <section class="products">
+        <h2 class="products__title">Nos Produits</h2>
+
+        <div class="products-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <div class="product-card__picture">
+                        <img src="{{ asset('uploads/products/' ~ product.picture)}}" alt="{{ product.name}}">
+                    </div>
+                    <div class="product-card__content">
+                        <h3 class="product-card__name">{{ product.name }}</h3>
+                        <p class="product-card__shortDesc">{{ product.shortDescription }}</p>
+                        <p class="product-card__price">{{ product.price }} €</p>
+                        <a class="btn btn--product" href="#">voir le produit</a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </section>
 </main>
