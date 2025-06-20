@@ -15,6 +15,7 @@ body {
     font-weight: 400;
     font-size: 14px;
     min-height: 100vh;
+    background-color: #FFFDF7;
 }
 
 img,
@@ -70,6 +71,7 @@ ul {
     padding: 32px 100px;
     display: flex;
     justify-content: space-between;
+    background-color: #FFFDF7;
     border-bottom: 1px solid #f7f1ec;
 }
 
@@ -173,6 +175,7 @@ ul {
     flex-direction: column;
     align-items: center;
     padding-top: 23px;
+    background-color: #FFFDF7;
 }
 
 .product-card__name {
