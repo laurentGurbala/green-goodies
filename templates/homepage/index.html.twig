@@ -25,18 +25,32 @@
 
         <div class="products-grid">
             {% for product in products %}
-                <div class="product-card">
-                    <div class="product-card__picture">
-                        <img src="{{ asset('uploads/products/' ~ product.picture)}}" alt="{{ product.name}}">
-                    </div>
-                    <div class="product-card__content">
-                        <h3 class="product-card__name">{{ product.name }}</h3>
-                        <p class="product-card__shortDesc">{{ product.shortDescription }}</p>
-                        <p class="product-card__price">{{ product.price }} €</p>
-                        <a class="btn btn--product" href="#">voir le produit</a>
-                    </div>
+            <div class="product-card">
+                <div class="product-card__picture">
+                    <img src="{{ asset('uploads/products/' ~ product.picture)}}" alt="{{ product.name}}">
                 </div>
+                <div class="product-card__content">
+                    <h3 class="product-card__name">{{ product.name }}</h3>
+                    <p class="product-card__shortDesc">{{ product.shortDescription }}</p>
+                    <p class="product-card__price">{{ product.price }} €</p>
+                    <a class="btn btn--product" href="#">voir le produit</a>
+                </div>
+            </div>
             {% endfor %}
+        </div>
+    </section>
+
+    <!-- Notre Conviction -->
+    <section class="conviction">
+        <div class="conviction-left">
+            <h2 class="conviction__title">notre conviction</h2>
+            <p class="conviction__content">
+                Chez GreenGoodies, nous croyons en un monde où le commerce peut être synonyme de bien-être pour la planète et ses habitants.
+                Notre mission est de vous proposer une sélection rigoureuse de produits qui allient qualité, durabilité et éthique
+            </p>
+        </div>
+        <div class="conviction-right">
+            <img src="{{ asset('uploads/website/conviction.jpg')}}" alt="Une branche de fleur" class="conviction__picture">
         </div>
     </section>
 </main>
