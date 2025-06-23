@@ -43,6 +43,7 @@ ul {
 
 /* Bouton */
 .btn {
+    display: block;
     background-color: #565656;
     color: #fff;
     text-align: center;
@@ -270,4 +271,62 @@ ul {
     font-weight: 300;
     line-height: 120%;
     width: 425px;
+}
+
+/* 
+    ========================
+    Page Détail d'un produit
+    ========================
+*/
+
+.product-detail {
+    display: flex;
+    height: 686px;
+}
+
+.product-detail__left {
+    flex-basis: 734px;
+}
+
+.product-detail__right {
+    flex: 1;
+}
+
+.product-detail__picture {
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-detail__content {
+    width: 464px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.product-detail__title {
+    color: #333;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 24px;
+}
+
+.product-detail__price {
+    color: #333;
+    font-weight: 300;
+    font-size: 30px;
+    margin-bottom: 72px;
+}
+
+.product-detail__subtitle {
+    color: #666;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+
+.product-detail__description {
+    color: #666;
+    margin-bottom: 145px;
 }
