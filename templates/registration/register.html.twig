@@ -1,19 +1,47 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ parent() }} Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+<main>
+    <section class="register">
+        <div class="register-left">
+            <img src="{{ asset('uploads/website/inscription-picture.png')}}" alt="Végétation verte">
+        </div>
+        <div class="register-right">
+            <div class="register__content">
+                <h1 class="register__title">Inscription</h1>
+                <p class="register__subtitle">Tous les champs sont obligatoires.</p>
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.lastName, {
+                    row_attr: {"class": "register__line"}
+                }) }}
+                {{ form_row(registrationForm.firstName, {
+                    row_attr: {"class": "register__line"}
+                }) }}
+                {{ form_row(registrationForm.email, {
+                    row_attr: {"class": "register__line"}
+                }) }}
+                 <div class="register__line">
+                    {{ form_label(registrationForm.password.first, 'Mot de passe') }}
+                    {{ form_widget(registrationForm.password.first) }}
+                    {{ form_errors(registrationForm.password.first) }}
+                </div>
+                <div class="register__line">
+                    {{ form_label(registrationForm.password.second, 'Confirmation') }}
+                    {{ form_widget(registrationForm.password.second) }}
+                    {{ form_errors(registrationForm.password.second) }}
+                </div>
+                {{ form_row(registrationForm.agreeTerms, {
+                    'attr': {'class': 'cgu'}, 
+                    'row_attr': {'class': 'cgu-container'}
+                }) }}
+                
+                <button type="submit" class="btn">S'inscrire</button>
+                {{ form_end(registrationForm) }}
+                <a href="{{ path('homepage') }}" class="register__link">Déjà un compte ? Se connecter</a>
+            </div>
+        </div>
+    </section>
+</main>
 {% endblock %}

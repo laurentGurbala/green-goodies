@@ -34,6 +34,7 @@ class RegistrationForm extends AbstractType
                 "mapped" => false
             ])
             ->add('agreeTerms', CheckboxType::class, [
+                "label" => "J'accepte les CGU de GreenGoodies",
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

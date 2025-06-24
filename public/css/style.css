@@ -330,3 +330,83 @@ ul {
     color: #666;
     margin-bottom: 145px;
 }
+
+/* 
+    ========================
+    Page Register
+    ========================
+*/
+
+.register {
+    display: flex;
+}
+
+.register-right {
+    flex: 1;
+}
+
+.register__content {
+    width: 475px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register__title {
+    font-weight: 500;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.register__subtitle {
+    font-weight: 400;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.register label {
+    color: #666;
+}
+
+.register__line {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.register input {
+    width: 100%;
+    height: 67px;
+    border: 1px solid #666;
+    background-color: #FFFDF7;
+}
+
+.cgu-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 48px;
+}
+
+.register .cgu {
+    width: 19px;
+    height: 19px;
+    margin-right: 8px;
+}
+
+.register .btn {
+    margin-bottom: 27px;
+}
+
+.register__link {
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
+    text-decoration: underline;
+    text-align: center;
+}
