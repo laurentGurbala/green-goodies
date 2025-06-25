@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<main>
+    <section class="login">
+        <div class="login__left">
+            <img src="{{ asset('uploads/website/conviction-picture.jpg') }}" alt="branche fleuri"
+                class="login__picture">
+        </div>
+
+        <div class="login__right">
+            <div class="login__content">
+                <h1 class="login__title">Connexion</h1>
+
+                {% if error %}
+                <div class="error-login">Une erreur est survenue, merci de réssayer plus tard.</div>
+                {% endif %}
+
+                <form method="post" class="login__form">
+
+                    <div class="login__line">
+                        <label for="username">Adresse email</label>
+                        <input type="email" name="_username" id="username" required>
+                    </div>
+
+                    <div class="login__line">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" name="_password" id="password" required>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                    <button type="submit" class="btn">Se connecter</button>
+                </form>
+                <a href="{{ path('register') }}" class="login__link">Pas encore de compte ? S'inscrire</a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
