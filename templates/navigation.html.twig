@@ -7,10 +7,15 @@
     </div>
     <div>
         <ul>
+            {% if app.user %}
             <li><a href="{{ path('homepage') }}#Products">Nos produits</a></li>
             <li><a href="#">Mon panier</a></li>
             <li><a href="#">Mon compte</a></li>
-            <li><a href="#">Déconnexion</a></li>
+            <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+            {% else %}
+            <li><a href="{{ path('app_login') }}">Connexion</a></li>
+            <li><a href="{{ path('register') }}">Inscription</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
