@@ -21,13 +21,13 @@
                 <form method="post" class="login__form">
 
                     <div class="login__line">
-                        <label for="username">Adresse email</label>
-                        <input type="email" name="_username" id="username" required>
+                        <label for="email">Adresse email</label>
+                        <input type="email" name="email" id="email" required>
                     </div>
 
                     <div class="login__line">
                         <label for="password">Mot de passe</label>
-                        <input type="password" name="_password" id="password" required>
+                        <input type="password" name="password" id="password" required>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
