@@ -16,9 +16,19 @@
                 <h1 class="product-detail__title">{{ product.name }}</h1>
                 <p class="product-detail__price">{{ product.price }}€</p>
                 <p class="product-detail__subtitle">Description</p>
-                <p class="product-detail__description">{{ product.fullDescription }}</p>
+                <p class="product-detail__description {% if app.user%}product-detail__description--login{% endif %}">{{ product.fullDescription }}</p>
                 
-                <a href="#" class="btn">Ajouter au panier</a>
+                {% if app.user %}
+                <form action="#" method="post" class="product-form">
+                    <div class="product-form__line">
+                        <label for="quantity">Quantité :</label>
+                        <input type="number" id="quantity" name="quantity" value="1" min="0" required>
+                    </div>
+                    <button type="submit" class="btn">Ajouter au panier</button>
+                </form>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn">Se connecter</a>
+                {% endif %}
             </div>
         </div>
 
