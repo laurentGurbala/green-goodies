@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -61,7 +62,7 @@ final class UserController extends AbstractController
         }
 
         // Affiche le formulaire d'inscription (ou renvoie en cas d'erreur)
-        return $this->render('registration/register.html.twig', [
+        return $this->render('user/register.html.twig', [
             'registrationForm' => $form,
         ]);
     }
@@ -79,7 +80,7 @@ final class UserController extends AbstractController
         $email = $authenticationUtils->getLastUsername();
 
         // Affiche le formulaire de login avec les infos récupérées
-        return $this->render('security/login.html.twig', [
+        return $this->render('user/login.html.twig', [
             'email' => $email,
             'error' => $error,
         ]);
@@ -93,5 +94,19 @@ final class UserController extends AbstractController
     {
         // Symfony intercepte cette méthode grâce à la config de sécurité
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+    }
+
+    /**
+     * Gère l'affichage du compte
+     */
+    #[IsGranted("ROLE_USER")]
+    #[Route(path:"/account", name: "account")]
+    public function account() : Response
+    {
+        $user = $this->getUser();
+
+        return $this->render("user/account.html.twig", [
+            "user" => $user
+        ]);
     }
 }

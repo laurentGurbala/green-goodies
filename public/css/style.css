@@ -499,3 +499,98 @@ ul {
     text-decoration: underline;
     text-align: center;
 }
+
+/* 
+    ========================
+    Page Account
+    ========================
+*/
+.account-container {
+    background: #f7f1ec;
+    min-height: 100vh;
+}
+
+.account {
+    width: 604px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.account__title {
+    font-weight: 500;
+    font-size: 20px;
+    color: #333;
+    padding: 43px;
+}
+
+.account-order {
+    background: #FFFDF7;
+    width: 100%;
+    padding: 60px;
+    margin-bottom: 15px;
+}
+
+.account-order__title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.account-table th,
+.account-table td {
+    text-align: left;
+    padding: 20px;
+}
+
+.account-table th {
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
+}
+
+.account-table td {
+    color: #333;
+    font-weight: 500;
+}
+
+.account-table tr:not(:first-child) {
+    border-top: 1px solid #ccc;
+}
+
+.account-table th:nth-child(1), .account-table td:nth-child(1),
+.account-table th:nth-child(2), .account-table td:nth-child(2) {
+    width: 45%;
+} 
+
+.account-table th:nth-child(3), .account-table td:nth-child(3) {
+    width: 10%;
+}
+
+.account-api {
+    background: #FFFDF7;
+    width: 100%;
+    padding: 60px;
+    margin-bottom: 15px;
+}
+
+.account-api__title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+
+.account-delete {
+    width: 100%;
+    background: #FFFDF7;
+    padding: 60px;
+    margin-bottom: 70px;
+}

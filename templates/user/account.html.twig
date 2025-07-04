@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+<main class="account-container">
+    <section class="account">
+        <h1 class="account__title">Mon compte</h1>
+
+        <!-- Historique des commandes -->
+        <div class="account-order">
+            <h2 class="account-order__title">Mes commandes</h2>
+            <!-- Tableau -->
+            <table class="account-table">
+                <!-- en-tête -->
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <!-- corps -->
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>01/01/2024</td>
+                        <td>185.50€</td>
+                    </tr>
+
+                    <tr>
+                        <td>2</td>
+                        <td>01/01/2024</td>
+                        <td>185.50€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Accès à l'API -->
+        <div class="account-api">
+            <h2 class="account-api__title">Mon accès API</h2>
+            <a href="#" class="btn">Activer mon accès API</a>
+        </div>
+
+        <!-- Suppression de compte -->
+        <div class="account-delete">
+            <a href="#" class="btn">Supprimer mon compte</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
