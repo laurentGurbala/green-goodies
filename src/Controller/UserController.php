@@ -109,4 +109,10 @@ final class UserController extends AbstractController
             "user" => $user
         ]);
     }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route(path: "/cart", name: "cart")]
+    public function cart() :Response {
+        return $this->render("user/cart.html.twig");
+    }
 }

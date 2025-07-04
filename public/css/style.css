@@ -594,3 +594,38 @@ ul {
     padding: 60px;
     margin-bottom: 70px;
 }
+
+/* 
+    ========================
+    Page Cart
+    ========================
+*/
+.cart-container {
+    background: #f7f1ec;
+    min-height: 100vh;
+}
+
+.cart {
+    width: 604px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 102px;
+    padding-bottom: 146px;
+}
+
+.cart__title {
+    font-weight: 500;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.cart__info {
+    font-weight: 400;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+    align-self: flex-start;
+}
