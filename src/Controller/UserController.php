@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\User;
 use App\Form\RegistrationForm;
 use App\Security\AppAuthenticator;
@@ -49,8 +50,14 @@ final class UserController extends AbstractController
             // Définit le rôle utilisateur standard
             $user->setRoles(["ROLE_USER"]);
 
-            // Enregistre l'utilisateur en base de données
+            // Création du panier 
+            $cart = new Cart();
+            $cart->setUser($user);
+            $user->setCart($cart);
+
+            // Enregistre l'utilisateur et le panier en base de données
             $entityManager->persist($user);
+            $entityManager->persist($cart);
             $entityManager->flush();
 
             // Connecte automatiquement l'utilisateur après inscription

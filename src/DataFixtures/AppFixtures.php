@@ -2,12 +2,17 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Cart;
 use App\Entity\Product;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+
+    public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
     public function load(ObjectManager $manager): void
     {
@@ -83,6 +88,7 @@ Grâce à sa formule non irritante et respectueuse de votre peau, Nécessaire of
             ]
         ];
 
+        // Création des produits
         foreach ($products as $data) {
             $product = (new Product())
                 ->setName($data['name'])
@@ -93,6 +99,27 @@ Grâce à sa formule non irritante et respectueuse de votre peau, Nécessaire of
 
             $manager->persist($product);
         }
+
+        // Création d'un utilisateur
+        $user = new User();
+        $user->setFirstName("splint");
+        $user->setLastName("gurby");
+        $user->setEmail("splint@test.fr");
+        $user->setRoles(["ROLE_USER"]);
+        $user->setApiActivated(false);
+
+        // Hash du mot de passe
+        $password = $this->passwordHasher->hashPassword($user, "123");
+        $user->setPassword($password);
+
+        // Création du panier lié
+        $cart = new Cart();
+        $cart->setUser($user);
+        $user->setCart($cart);
+
+        $manager->persist($user);
+        $manager->persist($cart);
+
         $manager->flush();
     }
 }
