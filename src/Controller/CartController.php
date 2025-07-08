@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Cart;
 use App\Entity\CartItem;
+use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +46,7 @@ final class CartController extends AbstractController
      */
     #[IsGranted("ROLE_USER")]
     #[Route('/cart/product/{id}', name: 'cart_add', methods: ["POST"])]
-    public function addOrUpdateProductInCart(Product $product, Request $request, EntityManagerInterface $em): Response 
+    public function addOrUpdateProductInCart(Product $product, Request $request, EntityManagerInterface $em): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -95,12 +97,13 @@ final class CartController extends AbstractController
 
     #[IsGranted("ROLE_USER")]
     #[Route("/cart/clear", name: "cart_clear", methods: ["GET"])]
-    public function clearToCart(EntityManagerInterface $em): response {
+    public function clearToCart(EntityManagerInterface $em): response
+    {
 
         /** @var User $user */
         $user = $this->getUser();
         $cart = $user->getCart();
-        
+
         // Supprime les produits du panier
         foreach ($cart->getCartItems() as $item) {
             $em->remove($item);
@@ -110,7 +113,57 @@ final class CartController extends AbstractController
 
         $em->flush();
         // TODO : Ajouter un message flash "Le panier a bien été vidé."
-        
+
         return $this->redirectToRoute("cart");
     }
+
+
+
+    #[IsGranted("ROLE_USER")]
+    #[Route(path: "/cart/validate", name: "cart_validate", methods: ["GET"])]
+    public function validateCart(EntityManagerInterface $em): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $cart = $user->getCart();
+
+        if ($cart->getCartItems()->isEmpty()) {
+            $this->addFlash("warning", "Votre panier est vide.");
+            return $this->redirectToRoute("cart");
+        }
+
+        $order = new Order();
+        $order->setUser($user);
+        $order->setCreatedAt(new \DateTimeImmutable());
+
+        $total = 0;
+
+        foreach ($cart->getCartItems() as $cartItem) {
+            $orderItem = new OrderItem();
+            $orderItem->setCustomOrder($order);
+            $orderItem->setProduct($cartItem->getProduct());
+            $orderItem->setQuantity($cartItem->getQuantity());
+            $orderItem->setPriceAtOrder($cartItem->getProduct()->getPrice());
+
+            $em->persist($orderItem);
+
+            $total += $cartItem->getProduct()->getPrice() * $cartItem->getQuantity();
+        }
+
+        $order->setTotal($total);
+        $em->persist($order);
+
+        // Vider le panier
+        foreach ($cart->getCartItems() as $item) {
+            $em->remove($item);
+        }
+        $cart->getCartItems()->clear();
+
+        $em->flush();
+
+        $this->addFlash("success", "Votre commande a été enregistrée avec succès !");
+        return $this->redirectToRoute("cart");
+    }
+
+    
 }

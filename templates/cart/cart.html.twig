@@ -39,7 +39,7 @@
 
         {% if cart.cartItems is not empty %}
             <div class="cart-confirm">
-                <a href="#" class="btn">Valider la commande</a>
+                <a href="{{ path('cart_validate') }}" class="btn">Valider la commande</a>
             </div>
         {% endif %}
     </section>

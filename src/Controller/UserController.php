@@ -111,10 +111,12 @@ final class UserController extends AbstractController
     #[Route(path:"/account", name: "account")]
     public function account() : Response
     {
+        /** @var User $user */
         $user = $this->getUser();
+        $orders = $user->getOrders();
 
         return $this->render("user/account.html.twig", [
-            "user" => $user
+            'orders' => $orders,
         ]);
     }
 }

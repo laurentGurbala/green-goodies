@@ -10,31 +10,32 @@
         <!-- Historique des commandes -->
         <div class="account-order">
             <h2 class="account-order__title">Mes commandes</h2>
-            <!-- Tableau -->
-            <table class="account-table">
-                <!-- en-tête -->
-                <thead>
-                    <tr>
-                        <th>N°</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <!-- corps -->
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>01/01/2024</td>
-                        <td>185.50€</td>
-                    </tr>
 
-                    <tr>
-                        <td>2</td>
-                        <td>01/01/2024</td>
-                        <td>185.50€</td>
-                    </tr>
-                </tbody>
-            </table>
+            {% if orders is empty %}
+                <p>Vous n'avez pas encore passé de commande.</p>
+            {% else %}
+                <!-- Tableau -->
+                <table class="account-table">
+                    <!-- en-tête -->
+                    <thead>
+                        <tr>
+                            <th>N°</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <!-- corps -->
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>{{ order.id }}</td>
+                                <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                                <td>{{ order.total|number_format(2, ',', ' ') }}€</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
 
         <!-- Accès à l'API -->
