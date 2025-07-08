@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
+use App\Entity\Product;
 use App\Entity\User;
 use App\Form\RegistrationForm;
 use App\Security\AppAuthenticator;
@@ -115,11 +116,5 @@ final class UserController extends AbstractController
         return $this->render("user/account.html.twig", [
             "user" => $user
         ]);
-    }
-
-    #[IsGranted("ROLE_USER")]
-    #[Route(path: "/cart", name: "cart")]
-    public function cart() :Response {
-        return $this->render("user/cart.html.twig");
     }
 }

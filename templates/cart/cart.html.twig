@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+<main class="cart-container">
+
+    <section class="cart">
+        <h1 class="cart__title">Mon panier</h1>
+
+        <!-- Article du panier -->
+        {% if cart is not empty %}
+        <a href="{{ path('cart_clear')}}" class="cart-empty-link"
+            onclick="return confirm('Etes-vous sûr de vouloir vider votre panier ?')">x Vider le panier</a>
+        {% endif %}
+
+        <div class="product-container">
+            {% if cart is empty %}
+            <p class="cart__info">Votre panier est vide.</p>
+            {% else %}
+                {% for item in cart.getCartItems %}
+                <div class="card-product">
+                    <img src="{{ asset('uploads/products/' ~ item.product().picture) }}" alt="{{ item.product.name }}">
+                    <div class="card-product__info">
+                        <p class="card-product__title">{{ item.product.name }}</p>
+                        <p class="card-product__quantity">Quantité: {{ item.quantity }}</p>
+                        <p class="card-product__price">{{ item.product.price }} €</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Total du panier -->
+        <div class="cart-total">
+            <p class="cart-total__info">Total panier : <span class="cart-total__price">{{ total }}€</span></p>
+            <p class="cart-total__delivery">Frais de livraison: Offert</p>
+        </div>
+
+        <div class="cart-confirm">
+            <a href="#" class="btn">Valider la commande</a>
+        </div>
+    </section>
+</main>
+{% endblock %}
