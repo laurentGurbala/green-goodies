@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Entity\Cart;
 use App\Entity\CartItem;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -92,5 +93,24 @@ final class CartController extends AbstractController
         return $this->redirectToRoute("product_detail", ["id" => $product->getId()]);
     }
 
-    
+    #[IsGranted("ROLE_USER")]
+    #[Route("/cart/clear", name: "cart_clear", methods: ["GET"])]
+    public function clearToCart(EntityManagerInterface $em): response {
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $cart = $user->getCart();
+        
+        // Supprime les produits du panier
+        foreach ($cart->getCartItems() as $item) {
+            $em->remove($item);
+        }
+
+        $cart->getCartItems()->clear();
+
+        $em->flush();
+        // TODO : Ajouter un message flash "Le panier a bien été vidé."
+        
+        return $this->redirectToRoute("cart");
+    }
 }

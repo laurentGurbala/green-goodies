@@ -9,13 +9,13 @@
         <h1 class="cart__title">Mon panier</h1>
 
         <!-- Article du panier -->
-        {% if cart is not empty %}
+        {% if cart.cartItems is not empty %}
         <a href="{{ path('cart_clear')}}" class="cart-empty-link"
             onclick="return confirm('Etes-vous sûr de vouloir vider votre panier ?')">x Vider le panier</a>
         {% endif %}
 
         <div class="product-container">
-            {% if cart is empty %}
+            {% if cart.cartItems is empty %}
             <p class="cart__info">Votre panier est vide.</p>
             {% else %}
                 {% for item in cart.getCartItems %}
@@ -37,9 +37,11 @@
             <p class="cart-total__delivery">Frais de livraison: Offert</p>
         </div>
 
-        <div class="cart-confirm">
-            <a href="#" class="btn">Valider la commande</a>
-        </div>
+        {% if cart.cartItems is not empty %}
+            <div class="cart-confirm">
+                <a href="#" class="btn">Valider la commande</a>
+            </div>
+        {% endif %}
     </section>
 </main>
 {% endblock %}
