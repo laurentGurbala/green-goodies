@@ -12,36 +12,40 @@
             <h2 class="account-order__title">Mes commandes</h2>
 
             {% if orders is empty %}
-                <p>Vous n'avez pas encore passé de commande.</p>
+            <p>Vous n'avez pas encore passé de commande.</p>
             {% else %}
-                <!-- Tableau -->
-                <table class="account-table">
-                    <!-- en-tête -->
-                    <thead>
-                        <tr>
-                            <th>N°</th>
-                            <th>Date</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <!-- corps -->
-                    <tbody>
-                        {% for order in orders %}
-                            <tr>
-                                <td>{{ order.id }}</td>
-                                <td>{{ order.createdAt|date('d/m/Y') }}</td>
-                                <td>{{ order.total|number_format(2, ',', ' ') }}€</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <!-- Tableau -->
+            <table class="account-table">
+                <!-- en-tête -->
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <!-- corps -->
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.createdAt|date('d/m/Y') }}</td>
+                        <td>{{ order.total|number_format(2, ',', ' ') }}€</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             {% endif %}
         </div>
 
         <!-- Accès à l'API -->
         <div class="account-api">
             <h2 class="account-api__title">Mon accès API</h2>
-            <a href="#" class="btn">Activer mon accès API</a>
+            {% if app.user.isApiActivated %}
+                <a href="{{ path('account_api_disable') }}" class="btn">Désactiver mon accès API</a>
+            {% else %}
+                <a href="{{ path('account_api_enable') }}" class="btn">Activer mon accès API</a>
+            {% endif %}
         </div>
 
         <!-- Suppression de compte -->

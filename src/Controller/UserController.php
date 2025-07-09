@@ -108,8 +108,8 @@ final class UserController extends AbstractController
      * Gère l'affichage du compte
      */
     #[IsGranted("ROLE_USER")]
-    #[Route(path:"/account", name: "account")]
-    public function account() : Response
+    #[Route(path: "/account", name: "account")]
+    public function account(): Response
     {
         /** @var User $user */
         $user = $this->getUser();
@@ -118,5 +118,31 @@ final class UserController extends AbstractController
         return $this->render("user/account.html.twig", [
             'orders' => $orders,
         ]);
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/mon-compte/api-activer', name: 'account_api_enable')]
+    public function enableApi(EntityManagerInterface $em): Response
+    {
+        /** @var User */
+        $user = $this->getUser();
+        $user->setApiActivated(true);
+        $em->flush();
+
+        $this->addFlash('success', 'Accès API activé !');
+        return $this->redirectToRoute('account');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route('/mon-compte/api-desactiver', name: 'account_api_disable')]
+    public function disableApi(EntityManagerInterface $em): Response
+    {
+        /** @var User */
+        $user = $this->getUser();
+        $user->setApiActivated(false);
+        $em->flush();
+
+        $this->addFlash('success', 'Accès API désactivé.');
+        return $this->redirectToRoute('account');
     }
 }
