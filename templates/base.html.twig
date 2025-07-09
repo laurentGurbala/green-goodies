@@ -10,10 +10,12 @@
 		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap" rel="stylesheet">
 		
 		{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
 			<link href="{{ asset('css/style.css')}}" rel="stylesheet">
 		{% endblock %}
 
 		{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
 			{% block importmap %}
 				{{ importmap('app') }}
 			{% endblock %}
