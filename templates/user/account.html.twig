@@ -50,7 +50,8 @@
 
         <!-- Suppression de compte -->
         <div class="account-delete">
-            <a href="{{ path('account_delete') }}" class="btn">Supprimer mon compte</a>
+            <a href="{{ path('account_delete') }}" class="btn" 
+            onclick="return confirm('Etes-vous sûr de vouloir supprimer votre compte ?')">Supprimer mon compte</a>
         </div>
     </section>
 </main>
