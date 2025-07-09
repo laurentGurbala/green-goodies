@@ -8,11 +8,14 @@ use App\Entity\User;
 use App\Form\RegistrationForm;
 use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Builder\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -144,5 +147,30 @@ final class UserController extends AbstractController
 
         $this->addFlash('success', 'Accès API désactivé.');
         return $this->redirectToRoute('account');
+    }
+
+    #[IsGranted("ROLE_USER")]
+    #[Route(path: "/account/delete", name: "account_delete", methods:["GET"])]
+    public function deleteAccount(
+        EntityManagerInterface $em, 
+        TokenStorageInterface $tokenStorage
+    ): RedirectResponse 
+    {
+        $user = $this->getUser();
+
+        if(!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        // Déconnecter l'utilisateur avant suppression
+        $tokenStorage->setToken(null);
+
+        // Supprimer l'utilisateur (cascade supprimera tout le reste)
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash("success", "Votre compte a bien été supprimé.");
+
+        return $this->redirectToRoute("homepage");
     }
 }
