@@ -41,6 +41,20 @@ ul {
     max-width: 1440px;
 }
 
+.flash-message {
+    color: #333;
+    padding: 15px;
+    text-align: center;
+}
+
+.flash-message--success {
+    background: #7cc67c;
+}
+
+.flash-message--error {
+    background: #c67c7c;
+}
+
 /* Bouton */
 .btn {
     display: block;

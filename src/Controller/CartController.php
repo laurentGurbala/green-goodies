@@ -69,16 +69,16 @@ final class CartController extends AbstractController
                 $cart->getCartItems()->removeElement($existingItem);
                 $em->remove($existingItem);
                 $em->flush();
-                // TODO : Ajouter un message flash "produit retiré du panier"
+                $this->addFlash("success", "Le produit à été retiré du panier.");
             }
-            
+
             return $this->redirectToRoute("product_detail", ["id" => $product->getId()]);
         }
 
         // Mis à jour de la quantité
         if ($existingItem) {
             $existingItem->setQuantity($quantity);
-            // TODO : Ajouter un message flash "Quantité mise à jour dans le panier."
+            $this->addFlash("success", "Quantité mise à jour dans le panier.");
         }
         // Ajout du produit dans le panier
         else {
@@ -89,7 +89,7 @@ final class CartController extends AbstractController
 
             $em->persist($cartItem);
             $cart->getCartItems()->add($cartItem); // bidirectionnel
-            // TODO : Ajouter un message flash "Produit ajouter au panier."
+            $this->addFlash("success", "Produit ajouter au panier.");
         }
 
         $em->flush();
@@ -114,7 +114,7 @@ final class CartController extends AbstractController
         $cart->getCartItems()->clear();
 
         $em->flush();
-        // TODO : Ajouter un message flash "Le panier a bien été vidé."
+        $this->addFlash("success", "Le panier a bien été vidé.");
 
         return $this->redirectToRoute("cart");
     }
@@ -130,7 +130,6 @@ final class CartController extends AbstractController
         $cart = $user->getCart();
 
         if ($cart->getCartItems()->isEmpty()) {
-            $this->addFlash("warning", "Votre panier est vide.");
             return $this->redirectToRoute("cart");
         }
 
