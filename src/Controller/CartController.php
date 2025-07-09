@@ -64,12 +64,14 @@ final class CartController extends AbstractController
         }
 
         // Si la quantité est à 0 => suppression
-        if ($quantity === 0 && $existingItem) {
-            $cart->getCartItems()->removeElement($existingItem);
-            $em->remove($existingItem);
-            $em->flush();
-
-            // TODO : Ajouter un message flash "produit retiré du panier"
+        if ($quantity === 0) {
+            if ($existingItem) {
+                $cart->getCartItems()->removeElement($existingItem);
+                $em->remove($existingItem);
+                $em->flush();
+                // TODO : Ajouter un message flash "produit retiré du panier"
+            }
+            
             return $this->redirectToRoute("product_detail", ["id" => $product->getId()]);
         }
 
@@ -164,6 +166,4 @@ final class CartController extends AbstractController
         $this->addFlash("success", "Votre commande a été enregistrée avec succès !");
         return $this->redirectToRoute("cart");
     }
-
-    
 }
