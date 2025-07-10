@@ -33,7 +33,7 @@
 
         <!-- Total du panier -->
         <div class="cart-total">
-            <p class="cart-total__info">Total panier : <span class="cart-total__price">{{ total }}€</span></p>
+            <p class="cart-total__info">Total panier : <span class="cart-total__price">{{ total|number_format(2, ',', ' ') }}€</span></p>
             <p class="cart-total__delivery">Frais de livraison: Offert</p>
         </div>
 
