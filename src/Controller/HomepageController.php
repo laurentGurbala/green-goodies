@@ -9,6 +9,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomepageController extends AbstractController
 {
+    /**
+     * Affiche la page d'accueil du site avec la liste complète des produits.
+     *
+     * @param ProductRepository $productRepository Le repository permettant de récupérer les produits.
+     * @return Response La vue Twig affichant les produits.
+     */
     #[Route('/', name: 'homepage')]
     public function index(ProductRepository $productRepository): Response
     {

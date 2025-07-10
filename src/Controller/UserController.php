@@ -23,7 +23,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 final class UserController extends AbstractController
 {
     /**
-     * Gère l'inscription des utilisateurs.
+     * Gère l'inscription d'un nouvel utilisateur.
+     *
+     * - Affiche un formulaire de création de compte.
+     * - Hash le mot de passe.
+     * - Crée automatiquement un panier associé à l'utilisateur.
+     * - Connecte l'utilisateur après validation du formulaire.
+     *
+     * @param Request $request Données de la requête HTTP.
+     * @param UserPasswordHasherInterface $userPasswordHasher Pour le hash du mot de passe.
+     * @param EntityManagerInterface $entityManager Persistance des données.
+     * @param UserAuthenticatorInterface $userAuthenticator Pour connecter l'utilisateur après inscription.
+     * @param AppAuthenticator $authenticator L'authenticator personnalisé.
+     *
+     * @return Response Page d'inscription ou redirection après inscription.
      */
     #[Route('/register', name: 'register')]
     public function register(
@@ -79,7 +92,10 @@ final class UserController extends AbstractController
     }
 
     /**
-     * Gère l'affichage du formulaire de connexion et les erreurs éventuelles.
+     * Affiche le formulaire de connexion avec gestion des erreurs.
+     *
+     * @param AuthenticationUtils $authenticationUtils Outils pour récupérer erreurs et identifiants précédents.
+     * @return Response Vue de connexion.
      */
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -98,7 +114,8 @@ final class UserController extends AbstractController
     }
 
     /**
-     * Point d'entrée pour la déconnexion (géré automatiquement par Symfony).
+     * Gère la déconnexion de l'utilisateur.
+     * Cette méthode est interceptée par Symfony selon la config du firewall.
      */
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
@@ -108,7 +125,9 @@ final class UserController extends AbstractController
     }
 
     /**
-     * Gère l'affichage du compte
+     * Affiche la page "Mon compte" avec l’historique des commandes.
+     *
+     * @return Response
      */
     #[IsGranted("ROLE_USER")]
     #[Route(path: "/account", name: "account")]
@@ -123,6 +142,12 @@ final class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Active l'accès à l'API pour l'utilisateur connecté.
+     *
+     * @param EntityManagerInterface $em
+     * @return Response Redirection vers le compte avec message de confirmation.
+     */
     #[IsGranted("ROLE_USER")]
     #[Route('/mon-compte/api-activer', name: 'account_api_enable')]
     public function enableApi(EntityManagerInterface $em): Response
@@ -136,6 +161,12 @@ final class UserController extends AbstractController
         return $this->redirectToRoute('account');
     }
 
+    /**
+     * Désactive l'accès à l'API pour l'utilisateur connecté.
+     *
+     * @param EntityManagerInterface $em
+     * @return Response Redirection vers le compte avec message de confirmation.
+     */
     #[IsGranted("ROLE_USER")]
     #[Route('/mon-compte/api-desactiver', name: 'account_api_disable')]
     public function disableApi(EntityManagerInterface $em): Response
@@ -149,6 +180,15 @@ final class UserController extends AbstractController
         return $this->redirectToRoute('account');
     }
 
+    /**
+     * Supprime définitivement le compte de l'utilisateur connecté.
+     * - Déconnecte l'utilisateur.
+     * - Supprime son compte (et son panier + commandes via cascade).
+     *
+     * @param EntityManagerInterface $em
+     * @param TokenStorageInterface $tokenStorage
+     * @return RedirectResponse Redirection vers la page d'accueil.
+     */
     #[IsGranted("ROLE_USER")]
     #[Route(path: "/account/delete", name: "account_delete", methods:["GET"])]
     public function deleteAccount(

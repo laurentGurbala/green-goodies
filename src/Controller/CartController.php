@@ -18,7 +18,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class CartController extends AbstractController
 {
     /**
-     * Gère l'affichage du panier
+     * Affiche le contenu du panier de l'utilisateur connecté.
+     *
+     * @return Response La vue du panier avec le total des articles.
      */
     #[IsGranted("ROLE_USER")]
     #[Route('/cart', name: 'cart', methods: ["GET"])]
@@ -42,7 +44,14 @@ final class CartController extends AbstractController
     }
 
     /**
-     * Met à jour l'item du panier
+     * Ajoute un produit au panier ou met à jour sa quantité.
+     * Si la quantité est 0, supprime l'article du panier.
+     *
+     * @param Product $product Le produit concerné.
+     * @param Request $request La requête contenant la quantité.
+     * @param EntityManagerInterface $em L'EntityManager Doctrine.
+     *
+     * @return Response Redirige vers la page du produit.
      */
     #[IsGranted("ROLE_USER")]
     #[Route('/cart/product/{id}', name: 'cart_add', methods: ["POST"])]
@@ -97,6 +106,12 @@ final class CartController extends AbstractController
         return $this->redirectToRoute("product_detail", ["id" => $product->getId()]);
     }
 
+    /**
+     * Vide entièrement le panier de l'utilisateur connecté.
+     *
+     * @param EntityManagerInterface $em L'EntityManager Doctrine.
+     * @return Response Redirige vers la page du panier.
+     */
     #[IsGranted("ROLE_USER")]
     #[Route("/cart/clear", name: "cart_clear", methods: ["GET"])]
     public function clearToCart(EntityManagerInterface $em): response
@@ -120,7 +135,16 @@ final class CartController extends AbstractController
     }
 
 
-
+    /**
+     * Valide le panier et transforme les articles en commande.
+     *
+     * - Crée une nouvelle commande (`Order`) pour l'utilisateur.
+     * - Copie chaque article du panier dans la commande (`OrderItem`).
+     * - Calcule le total et vide le panier.
+     *
+     * @param EntityManagerInterface $em L'EntityManager Doctrine.
+     * @return Response Redirige vers la page panier avec un message de succès.
+     */
     #[IsGranted("ROLE_USER")]
     #[Route(path: "/cart/validate", name: "cart_validate", methods: ["GET"])]
     public function validateCart(EntityManagerInterface $em): Response
