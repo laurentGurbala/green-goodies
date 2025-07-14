@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Un compte avec cet email existe déjà.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -45,8 +45,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: "Le prénom doit contenir au moins {{ limit }} caractères.",
         maxMessage: "Le prénom ne peut pas dépasser {{ limit }} caractères."
     )]
+    #[Assert\Regex(
+        pattern: '/^[^\d]*$/',
+        message: 'Le prénom ne doit pas contenir de chiffres.'
+    )]
     private ?string $firstName = null;
-    
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     #[Assert\Length(
@@ -54,6 +58,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max: 255,
         minMessage: "Le nom doit contenir au moins {{ limit }} caractères.",
         maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères."
+    )]
+    #[Assert\Regex(
+        pattern: '/^[^\d]*$/',
+        message: 'Le prénom ne doit pas contenir de chiffres.'
     )]
     private ?string $lastName = null;
 
@@ -106,7 +114,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return string
      */
-    public function getUsername(): string {
+    public function getUsername(): string
+    {
         return $this->getUserIdentifier();
     }
 
